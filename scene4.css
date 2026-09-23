@@ -1,0 +1,755 @@
+@font-face {
+  font-family: "Alagard";
+  src: url("./alagard.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+:root {
+  font-size: 16px;
+  --stage-width: 120rem;
+  --stage-height: 67.5rem;
+  --cream: #fff7b8;
+  --paper: #fffce8;
+  --red: #ff0000;
+  --brown: #451f18;
+  --deep-red: #520707;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+body {
+  position: relative;
+  font-family: "Alagard", serif;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.scene-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--stage-width);
+  height: var(--stage-height);
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  background: #000;
+}
+
+/* -------------------------------------------------
+   BASE / HUMAN
+------------------------------------------------- */
+
+.background-human-video {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 120rem;
+  height: 67.5rem;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.human-track-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 120rem;
+  height: 67.5rem;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/*
+  Intro only uses HUMAN_00000:
+  state 1 = 1620×911, top 167, left 150, opacity 0
+  state 2 = 1920×1080, top 0, left 0, opacity 1
+*/
+.human-frame {
+  position: absolute;
+  display: block;
+  contain: paint;
+  top: 10.4375rem;       /* 167 / 16 */
+  left: 9.375rem;        /* 150 / 16 */
+  width: 101.25rem;      /* 1620 / 16 */
+  height: 56.9375rem;    /* 911 / 16 */
+  opacity: 0;
+
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+
+  transition:
+    top 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+    left 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+    width 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+    height 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 1.8s ease;
+
+  will-change:
+    top,
+    left,
+    width,
+    height,
+    opacity,
+    transform;
+}
+
+.human-frame.intro-expand {
+  top: 0;
+  left: 0;
+  width: 120rem;
+  height: 67.5rem;
+  opacity: 1;
+}
+
+.human-frame.is-running {
+  animation: humanBob 1s ease-in-out infinite alternate;
+}
+
+@keyframes humanBob {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(5rem); /* 80 / 16 */
+  }
+}
+
+.hold-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 120rem;
+  height: 67.5rem;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+.hold-overlay.is-visible {
+  opacity: 1;
+}
+
+/* -------------------------------------------------
+   PIXEL THREAD LAYER
+------------------------------------------------- */
+
+.thread-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 120rem;
+  height: 67.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.thread-layer.is-visible {
+  opacity: 1;
+}
+
+.thread-layer canvas {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 120rem !important;
+  height: 67.5rem !important;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+}
+
+/* -------------------------------------------------
+   BIG TRACKED HANDS
+------------------------------------------------- */
+
+.big-hand {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  width: 120rem;
+  height: 67.5rem;
+  background-image: url("./SCENE4/handbig.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: opacity 0.6s ease;
+  transform-origin: center center;
+}
+
+.big-hand.is-visible {
+  opacity: 1;
+}
+
+.big-hand-left {
+  transform: scaleX(-1);
+}
+
+.big-hand-right {
+  transform: none;
+}
+
+/* -------------------------------------------------
+   INITIAL PANEL
+------------------------------------------------- */
+
+.scene-image {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  pointer-events: none;
+}
+
+.dialogue-phase {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+.dialogue-phase.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.panel-text4 {
+  inset: 0;
+  width: 119.8125rem; /* 1917 */
+  height: 67.5rem;
+  z-index: 20;
+  background-image: url("./SCENE4/paneltext4.png");
+}
+
+.panel-name4 {
+  inset: 0;
+  width: 119.8125rem; /* 1917 */
+  height: 67.5rem;
+  z-index: 21;
+  background-image: url("./SCENE4/panelname4.png");
+}
+
+.diamond-group {
+  position: absolute;
+  inset: 0;
+  z-index: 22;
+  pointer-events: none;
+}
+
+.diamond-main,
+.diamond-slice {
+  position: absolute;
+  top: 57.125rem; /* 914 */
+  height: 3.5625rem; /* 57 */
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+.diamond-main {
+  left: 92.6875rem; /* 1483 */
+  width: 3.375rem; /* 54 */
+  background-image: url("./SCENE1/diamond1.png");
+  animation: diamondStateOne 0.8s steps(1, end) infinite;
+}
+
+.diamond-slice {
+  left: 94.25rem; /* 1508 */
+  width: 0.3125rem; /* 5 */
+  background-image: url("./SCENE1/diamond1-1.png");
+  animation: diamondStateTwo 0.8s steps(1, end) infinite;
+}
+
+@keyframes diamondStateOne {
+  0%,
+  49.999% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes diamondStateTwo {
+  0%,
+  49.999% {
+    opacity: 0;
+  }
+  50%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.beloved-label {
+  position: absolute;
+  z-index: 23;
+  top: 45.75rem; /* 732 */
+  left: 26.5rem; /* 424 */
+  width: 15.3125rem; /* 245 */
+  color: var(--cream);
+  font-size: 2.5rem; /* 40 */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.beloved-dialogue {
+  position: absolute;
+  z-index: 23;
+  top: 50.875rem; /* 814 */
+  left: 24.3125rem; /* 389 */
+  width: 70.375rem; /* 1126 */
+  color: var(--cream);
+  font-size: 2.25rem; /* 36 */
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.12;
+}
+
+.beloved-dialogue .hold-me {
+  color: var(--red);
+}
+
+.continue-prompt {
+  position: absolute;
+  z-index: 23;
+  top: 58.0625rem; /* 929 */
+  left: 69.5rem; /* 1112 */
+  width: 22.5625rem; /* 361 */
+  color: var(--cream);
+  font-size: 2rem; /* 32 */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  opacity: 0.5;
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------
+   GUIDE PHASE
+------------------------------------------------- */
+
+.guide-phase {
+  position: absolute;
+  inset: 0;
+  z-index: 21;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+.guide-phase.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.guide-hand {
+  position: absolute;
+  top: 13.5rem; /* 216 */
+  width: 17.125rem; /* 274 */
+  height: 22rem; /* 352 */
+  background-image: url("./SCENE4/handsmall.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.guide-hand-right {
+  left: 68rem; /* 1088 */
+  animation: guideRightHand 1s ease-in-out infinite alternate;
+}
+
+.guide-hand-left {
+  left: 34.375rem; /* 550 */
+  transform: scaleX(-1);
+  animation: guideLeftHand 1s ease-in-out infinite alternate;
+}
+
+@keyframes guideRightHand {
+  from {
+    left: 68rem; /* 1088 */
+  }
+  to {
+    left: 60rem; /* 960 */
+  }
+}
+
+@keyframes guideLeftHand {
+  from {
+    left: 34.375rem; /* 550 */
+  }
+  to {
+    left: 42.875rem; /* 686 */
+  }
+}
+
+.box-guiding {
+  position: absolute;
+  top: 36.6875rem; /* 587 */
+  left: 33.5rem; /* 536 */
+  width: 52.9375rem; /* 847 */
+  height: 21.375rem; /* 342 */
+  background-image: url("./SCENE4/boxguiding.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+.guide-title {
+  position: absolute;
+  top: 40.9375rem; /* 655 */
+  left: 43.9375rem; /* 703 */
+  width: 32.0625rem; /* 513 */
+  color: var(--brown);
+  font-size: 2.25rem; /* 36 */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+/*
+  The brief did not include top/left for these two guide texts.
+  They are centered inside boxguiding while preserving the requested sizes.
+*/
+.agreement-reminder {
+  position: absolute;
+  top: 45.3125rem; /* 725 */
+  left: 40.4375rem; /* 647 */
+  width: 39.125rem; /* 626 */
+  height: 4.625rem; /* 74 */
+  color: var(--red);
+  text-align: center;
+  font-size: 2.25rem; /* 36 */
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.05;
+  animation: reminderGlow 1s ease-in-out infinite alternate;
+}
+
+@keyframes reminderGlow {
+  from {
+    text-shadow: none;
+  }
+  to {
+    text-shadow: 0 0 0.9375rem rgba(255, 0, 0, 0.4); /* 15 */
+  }
+}
+
+.ready-prompt {
+  position: absolute;
+  top: 51.6875rem;       /* 827 / 16 */
+  left: 45.375rem;       /* 726 / 16 */
+  width: 31.1875rem;     /* 499 */
+  color: var(--brown);
+  font-family: "Alagard", serif;
+  font-size: 2rem;        /* 32 */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  opacity: 0.5;
+  white-space: nowrap;
+  animation: readyBlink 1s steps(1, end) infinite;
+}
+
+@keyframes readyBlink {
+  0%,
+  49.999% {
+    opacity: 0.5;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* -------------------------------------------------
+   CAMERA
+------------------------------------------------- */
+
+.tracking-phase {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.tracking-phase.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.camera-box {
+  position: absolute;
+  top: 51.0625rem; /* 817 */
+  left: 47.3125rem; /* 757 */
+  width: 25.375rem; /* 406 */
+  height: 13.6875rem; /* 219 */
+  background: #000;
+  outline: 0.125rem solid var(--red); /* outside 2px */
+  overflow: hidden;
+}
+
+#webcam {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  background: #000;
+}
+
+.thermal-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+}
+
+.camera-inner-stroke {
+  position: absolute;
+  z-index: 2;
+  top: 1.1875rem; /* 836 - 817 = 19 */
+  left: 1.4375rem; /* 780 - 757 = 23 */
+  width: 22.5rem; /* 360 */
+  height: 11.3125rem; /* 181 */
+  border: 0.125rem solid var(--red);
+  pointer-events: none;
+}
+
+/* -------------------------------------------------
+   WARNING / FAILURE
+------------------------------------------------- */
+
+.danger-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.danger-vignette.warning {
+  opacity: 1;
+  animation: warningVignette 0.7s steps(1, end) infinite;
+}
+
+@keyframes warningVignette {
+  0%,
+  49.999% {
+    box-shadow: 0 0 5rem 0 #f00 inset; /* 80 */
+  }
+  50%,
+  100% {
+    box-shadow: none;
+  }
+}
+
+.danger-vignette.failure {
+  opacity: 1;
+  animation: none;
+  box-shadow: 0 0 5rem 0 #f00 inset;
+}
+
+.main-alert {
+  position: absolute;
+  z-index: 51;
+  top: 29.625rem; /* 474 */
+  left: 33.5rem; /* 536 */
+  width: 53rem; /* 848 */
+  color: var(--red);
+  text-align: center;
+  font-size: 8rem; /* 128 */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+  -webkit-text-stroke: 0.875rem var(--deep-red);
+  paint-order: stroke fill;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.keep-holding-alert.is-visible {
+  opacity: 1;
+}
+
+.failure-main.is-visible {
+  opacity: 1;
+  animation: mainImpact 0.58s steps(2, end) both;
+}
+
+@keyframes mainImpact {
+  0% {
+    opacity: 0;
+    transform: scale(0.65) translate(0.75rem, -0.5rem);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.failure-texts {
+  position: absolute;
+  inset: 0;
+  z-index: 52;
+  pointer-events: none;
+}
+
+.failure-copy {
+  position: absolute;
+  color: var(--paper);
+  font-size: 2.5rem; /* 40 */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+  opacity: 0;
+
+  -webkit-text-stroke: 0.25rem var(--red);
+  paint-order: stroke fill;
+}
+
+.failure-texts.is-visible .failure-copy {
+  animation: alertPop 0.58s steps(2, end) both;
+}
+
+@keyframes alertPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.65) translate(0.75rem, -0.5rem) rotate(var(--tilt, 0deg));
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.1) rotate(var(--tilt, 0deg));
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(var(--tilt, 0deg));
+  }
+}
+
+.failure-copy-1 {
+  top: 11.3125rem; /* 181 */
+  left: 80.625rem; /* 1290 */
+  --tilt: -2deg;
+  animation-delay: 0.05s !important;
+}
+
+.failure-copy-2 {
+  top: 21.8125rem; /* 349 */
+  left: 106.8125rem; /* 1709 */
+  --tilt: 2deg;
+  animation-delay: 0.12s !important;
+}
+
+.failure-copy-3 {
+  top: 43.375rem; /* 694 */
+  left: 88.6875rem; /* 1419 */
+  --tilt: -3deg;
+  animation-delay: 0.19s !important;
+}
+
+.failure-copy-4 {
+  top: 22.375rem; /* 358 */
+  left: 20.375rem; /* 326 */
+  --tilt: 2deg;
+  animation-delay: 0.26s !important;
+}
+
+.failure-copy-5 {
+  top: 36.8125rem; /* 589 */
+  left: -6.4375rem; /* -103 */
+  --tilt: -1deg;
+  animation-delay: 0.33s !important;
+}
+
+.failure-copy-6 {
+  top: 59.625rem; /* 954 */
+  left: 94.1875rem; /* 1507 */
+  --tilt: 2deg;
+  animation-delay: 0.40s !important;
+}
+
+.failure-copy-7 {
+  top: 54.25rem; /* 868 */
+  left: 3.1875rem; /* 51 */
+  --tilt: -2deg;
+  animation-delay: 0.47s !important;
+}
+
+.failure-copy-8 {
+  top: 12.625rem; /* 202 */
+  left: 2.25rem; /* 36 */
+  --tilt: 3deg;
+  animation-delay: 0.54s !important;
+}
+
+.blackout {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.65s linear;
+}
+
+.blackout.is-visible {
+  opacity: 1;
+}
+
+.scene-stage.fail-shake {
+  animation: sceneShake 0.11s steps(2, end) 10;
+}
+
+@keyframes sceneShake {
+  0% { transform: translate(-50%, -50%) translate(0, 0); }
+  25% { transform: translate(-50%, -50%) translate(-0.25rem, 0.125rem); }
+  50% { transform: translate(-50%, -50%) translate(0.3125rem, -0.125rem); }
+  75% { transform: translate(-50%, -50%) translate(-0.125rem, -0.1875rem); }
+  100% { transform: translate(-50%, -50%) translate(0, 0); }
+}

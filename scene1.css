@@ -1,0 +1,212 @@
+@font-face {
+  font-family: "Alagard";
+  src: url("./alagard.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+:root {
+  font-size: 16px;
+  --stage-width: 120rem;
+  --stage-height: 67.5rem;
+  --cream: #fff7b8;
+  --red: #ff0000;
+  --hover-box: #ffba55;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+body {
+  position: relative;
+  font-family: "Alagard", serif;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+button { font: inherit; }
+
+.scene-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--stage-width);
+  height: var(--stage-height);
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  background: #000;
+}
+
+.scene-image {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  pointer-events: none;
+}
+
+.panel-text {
+  width: 77.875rem;
+  height: 15.9375rem;
+  top: 46.4375rem;
+  left: 21rem;
+  z-index: 1;
+  background-image: url("./SCENE1/paneltext1.png");
+}
+
+.diamond-main {
+  width: 3.375rem;
+  height: 3.5625rem;
+  top: 57.125rem;
+  left: 92.6875rem;
+  z-index: 2;
+  background-image: url("./SCENE1/diamond1.png");
+  animation: diamondStateOne 0.8s steps(1, end) infinite;
+}
+
+.diamond-slice {
+  width: 0.3125rem;
+  height: 3.5625rem;
+  top: 57.125rem;
+  left: 94.25rem;
+  z-index: 3;
+  background-image: url("./SCENE1/diamond1-1.png");
+  animation: diamondStateTwo 0.8s steps(1, end) infinite;
+}
+
+@keyframes diamondStateOne {
+  0%, 49.999% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes diamondStateTwo {
+  0%, 49.999% { opacity: 0; }
+  50%, 100% { opacity: 1; }
+}
+
+.dialogue-text {
+  position: absolute;
+  z-index: 4;
+  left: 24.3125rem;
+  top: 49.8125rem;
+  width: 70.375rem;
+  color: var(--cream);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1.12;
+  white-space: normal;
+}
+
+.continue-prompt {
+  position: absolute;
+  z-index: 5;
+  top: 58.0625rem;       /* 929 / 16 */
+  left: 48rem;           /* 768 / 16 */
+  width: auto;
+  color: var(--cream);
+  font-size: 2rem;        /* 32 / 16 */
+  font-weight: 500;
+  line-height: normal;
+  opacity: 0.5;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+
+.choice-group {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.choice-group.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.choice {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--cream);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+  cursor: pointer;
+  isolation: isolate;
+}
+
+.choice::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  display: block;
+  background: var(--hover-box);
+  opacity: 0;
+  transition: opacity 80ms linear;
+}
+
+.choice:hover { color: var(--red); }
+.choice:hover::before { opacity: 1; }
+
+.choice-yes {
+  top: 55.3125rem;
+  left: 44.8125rem;
+  width: 6.0625rem;
+}
+.choice-yes::before {
+  top: -0.1875rem;
+  left: -0.4375rem;
+  width: 6.8125rem;
+  height: 2.625rem;
+}
+
+.choice-no {
+  top: 55.3125rem;
+  left: 70.4375rem;
+  width: 4.6875rem;
+}
+.choice-no::before {
+  top: -0.1875rem;
+  left: -0.375rem;
+  width: 5.25rem;
+  height: 2.625rem;
+}
+
+.dialogue-text.is-question {
+  top: 51.25rem;
+  left: 31.875rem;
+  width: 56.25rem;
+}
+
+
+.scene1-kaleido-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+  background: #000;
+  pointer-events: none;
+}
+
+.scene-stage > *:not(.scene1-kaleido-bg) {
+  position: absolute;
+}

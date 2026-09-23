@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scarlet Wishes — Scene 2</title>
+  <link rel="stylesheet" href="./scene2.css" />
+  <link rel="stylesheet" href="./interface.css" />
+  <script>try{if(sessionStorage.getItem('entanglement:wipe-open')==='1')document.documentElement.classList.add('scene-wipe-pending')}catch(e){}</script>
+  <link rel="stylesheet" href="./transition.css" />
+</head>
+<body>
+  <main id="scene2Stage" class="scene-stage">
+    <div class="scene-layer base base-1" aria-hidden="true"></div>
+    <div class="scene-layer base base-2" aria-hidden="true"></div>
+
+    <div class="scene-layer base3-group" aria-hidden="true">
+      <div class="base3 base3-1 is-active"></div>
+      <div class="base3 base3-2"></div>
+      <div class="base3 base3-3"></div>
+    </div>
+
+    <div class="scene-layer base base-4" aria-hidden="true"></div>
+
+    <div class="cloud cloud1-a" aria-hidden="true"></div>
+    <div class="cloud cloud1-b" aria-hidden="true"></div>
+    <div class="cloud cloud2-a" aria-hidden="true"></div>
+    <div class="cloud cloud2-b" aria-hidden="true"></div>
+    <div class="cloud cloud3-a" aria-hidden="true"></div>
+    <div class="cloud cloud3-b" aria-hidden="true"></div>
+
+    <section id="panelPhase" class="panel-phase">
+      <div class="scene-layer panel-text2" aria-hidden="true"></div>
+      <div class="scene-layer panel-name2" aria-hidden="true"></div>
+
+      <div class="diamond-group" aria-hidden="true">
+        <div class="diamond-main2"></div>
+        <div class="diamond-slice2"></div>
+      </div>
+
+      <div class="deities-label">The Deities</div>
+      <div id="scene2Dialogue" class="scene2-dialogue" aria-live="polite"></div>
+      <div id="scene2ContinuePrompt" class="scene2-continue-prompt">
+        PRESS “C” TO CONTINUE
+      </div>
+    </section>
+
+    <div id="agreementOverlay" class="agreement-overlay" aria-hidden="true"></div>
+
+    <section id="agreementPhase" class="agreement-phase" aria-hidden="true">
+      <div id="letterFrame" class="letter-frame"></div>
+
+      <div id="agreementContent" class="agreement-content">
+        <div class="agreement-title-small">LETTER OF</div>
+        <div class="agreement-title-large">AGREEMENT</div>
+
+        <div id="agreementLead" class="agreement-lead sweep-hover">
+          We, The Deities, agree to bring into your life a person shaped by the your wishes.
+        </div>
+
+        <div id="agreementReturn" class="agreement-return sweep-hover">
+          <div class="return-heading">&lt; In return &gt;</div>
+          <div class="return-body">
+            You agree to hold them. To love them. To keep them by your side.<br />
+            As long as the red thread remains, you must hold them.<br />
+            If you ever let go... the thread will make sure they hold you instead.
+          </div>
+        </div>
+
+        <div class="sign-label deities-sign">THE DEITIES</div>
+        <div class="sign-label player-sign">YOUR SIGNATURE</div>
+
+        <div class="deities-sign-image" aria-hidden="true"></div>
+
+        <canvas id="signatureCanvas" class="signature-canvas" width="408" height="146"></canvas>
+
+      </div>
+
+      <div id="agreementContinuePrompt" class="agreement-continue-prompt">
+        PRESS “C” TO CONTINUE
+      </div>
+    </section>
+  </main>
+    <script src="./scarlet-audio.js"></script>
+  <script src="./interface.js"></script>
+<script src="./scene2.js"></script>
+  <script src="./transition.js"></script>
+</body>
+</html>

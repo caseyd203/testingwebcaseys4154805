@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scarlet Wishes — Ending</title>
+  <link rel="stylesheet" href="./ending.css" />
+  <link rel="stylesheet" href="./interface.css" />
+</head>
+<body>
+  <main id="endingStage" class="design-stage">
+    <div id="storyLayer" class="story-layer">
+      <div id="copy" class="copy" aria-live="polite"></div>
+      <div id="endingContinue" class="ending-continue">PRESS “C” TO CONTINUE</div>
+    </div>
+
+    <section id="finalLayer" class="final-layer" aria-hidden="true">
+      <div class="the-end-image" aria-hidden="true"></div>
+      <button id="startOver" class="start-over" type="button">START OVER</button>
+    </section>
+  </main>
+
+  <canvas id="pixelCanvas" aria-hidden="true"></canvas>
+    <script src="./scarlet-audio.js"></script>
+  <script src="./interface.js"></script>
+<script src="./ending.js"></script>
+</body>
+</html>

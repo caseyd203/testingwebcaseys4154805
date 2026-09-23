@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scarlet Wishes — Scene 4</title>
+  <link rel="stylesheet" href="./scene4.css" />
+  <link rel="stylesheet" href="./interface.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.js"></script>
+  <script>try{if(sessionStorage.getItem('entanglement:wipe-open')==='1')document.documentElement.classList.add('scene-wipe-pending')}catch(e){}</script>
+  <link rel="stylesheet" href="./transition.css" />
+</head>
+<body>
+  <main id="scene4Stage" class="scene-stage">
+    <!-- z1: video background -->
+    <video
+      id="backgroundHumanVideo"
+      preload="auto"
+      class="background-human-video"
+      autoplay
+      muted
+      loop
+      playsinline
+    >
+      <source src="./SCENE4/backgroundhuman.mp4" type="video/mp4" />
+    </video>
+
+    <!-- z2: HUMAN frame sequence -->
+    <div id="humanTrackWrapper" class="human-track-wrapper">
+      <canvas id="humanFrame" class="human-frame" width="1920" height="1080" aria-hidden="true"></canvas>
+    </div>
+
+    <!-- z3: 70% black overlay used after dialogue -->
+    <div id="holdOverlay" class="hold-overlay" aria-hidden="true"></div>
+
+    <!-- z4: pixel red threads -->
+    <div id="threadLayer" class="thread-layer" aria-hidden="true"></div>
+
+    <!-- z5: tracked big hands, above human/threads -->
+    <div id="leftBigHand" class="big-hand big-hand-left" aria-hidden="true"></div>
+    <div id="rightBigHand" class="big-hand big-hand-right" aria-hidden="true"></div>
+
+    <!-- Initial beloved dialogue UI -->
+    <section id="dialoguePhase" class="dialogue-phase" aria-live="polite">
+      <div class="scene-image panel-text4" aria-hidden="true"></div>
+      <div class="scene-image panel-name4" aria-hidden="true"></div>
+
+      <div class="diamond-group" aria-hidden="true">
+        <div class="diamond-main"></div>
+        <div class="diamond-slice"></div>
+      </div>
+
+      <div class="beloved-label">Your Beloved</div>
+
+      <div id="belovedDialogue" class="beloved-dialogue">
+        Hi... I'm the one you wished for. Everything you asked for,<br />
+        everything you hoped I would be... I'm here now.
+      </div>
+
+      <div class="continue-prompt">PRESS “C” TO CONTINUE</div>
+    </section>
+
+    <!-- Instruction phase before camera -->
+    <section id="guidePhase" class="guide-phase" aria-hidden="true">
+      <div class="guide-hand guide-hand-left" aria-hidden="true"></div>
+      <div class="guide-hand guide-hand-right" aria-hidden="true"></div>
+      <div class="box-guiding" aria-hidden="true"></div>
+
+      <div class="guide-title">Move your hands to hold them.</div>
+
+      <div class="agreement-reminder">
+        ! REMINDER FROM THE AGREEMENT !<br />
+        You must keep holding them forever.
+      </div>
+
+      <div class="ready-prompt">PRESS “R” WHEN YOU ARE READY.</div>
+    </section>
+
+    <!-- Camera / tracking -->
+    <section id="trackingPhase" class="tracking-phase" aria-hidden="true">
+      <div class="camera-box">
+        <video id="webcam" autoplay muted playsinline></video>
+        <canvas id="thermalCanvas" class="thermal-canvas" width="102" height="55"></canvas>
+        <div class="camera-inner-stroke" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- Warning / failure UI -->
+    <div id="dangerVignette" class="danger-vignette" aria-hidden="true"></div>
+
+    <div id="keepHoldingWarning" class="main-alert keep-holding-alert">
+      KEEP HOLDING
+    </div>
+
+    <div id="failureMain" class="main-alert failure-main">
+      DISAPPOINTED
+    </div>
+
+    <div id="failureTexts" class="failure-texts" aria-hidden="true">
+      <div class="failure-copy failure-copy-1">YOU COULD NOT HOLD ON</div>
+
+      <div class="failure-copy failure-copy-2">DISAPPOINTED</div>
+      <div class="failure-copy failure-copy-3">DISAPPOINTED</div>
+      <div class="failure-copy failure-copy-4">DISAPPOINTED</div>
+      <div class="failure-copy failure-copy-5">DISAPPOINTED</div>
+
+      <div class="failure-copy failure-copy-6">I TRUSTED YOU</div>
+      <div class="failure-copy failure-copy-7">YOU BROKE YOUR PROMISE</div>
+      <div class="failure-copy failure-copy-8">DON’T LET ME GO</div>
+    </div>
+
+    <div id="blackout" class="blackout" aria-hidden="true"></div>
+  </main>
+
+    <script src="./scarlet-audio.js"></script>
+  <script src="./interface.js"></script>
+<script src="./scene4.js"></script>
+  <script src="./transition.js"></script>
+</body>
+</html>

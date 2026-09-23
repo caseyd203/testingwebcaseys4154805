@@ -1,0 +1,39 @@
+/* Dense irregular vertical-strip transition based on the supplied reference. */
+:root { --scene-wipe-z: 2147483000; }
+
+/* Keep the incoming document black until its closed strip layer is mounted. */
+html.scene-wipe-pending::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: var(--scene-wipe-z);
+  pointer-events: all;
+}
+
+.scene-wipe {
+  position: fixed;
+  inset: 0;
+  z-index: var(--scene-wipe-z);
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+  isolation: isolate;
+}
+
+.scene-wipe.is-blocking { pointer-events: all; }
+
+.scene-wipe__bar {
+  position: absolute;
+  top: -2px;
+  height: calc(100% + 4px);
+  background: #000;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0,0,0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Keep the transition functional; JS still controls navigation/opening. */
+  .scene-wipe__bar { will-change: auto; }
+}

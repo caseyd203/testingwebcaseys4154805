@@ -1,0 +1,101 @@
+@font-face {
+  font-family: "Alagard";
+  src: url("./alagard.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+:root {
+  font-size: 16px;
+  --stage-width: 120rem;
+  --stage-height: 67.5rem;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+body {
+  position: relative;
+  font-family: "Alagard", serif;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.cover-stage {
+  position: absolute;
+  width: var(--stage-width);
+  height: var(--stage-height);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  background: #000;
+}
+
+.cover-layer {
+  position: absolute;
+  width: 120rem;
+  height: 67.5rem;
+  left: 0;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+
+.cover-bg {
+  top: 0;
+  z-index: 1;
+  background-image: url("./COVER&ENDING/coverbg.png");
+}
+
+.scarlet-wishes {
+  top: 0;
+  z-index: 2;
+  background-image: url("./COVER&ENDING/scarletwishes.png");
+  animation: scarletFloat 1.8s ease-in-out infinite alternate;
+  will-change: top;
+}
+
+.push-start {
+  position: absolute;
+  z-index: 3;
+  top: 46.625rem;
+  left: 48.5rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #ff0004;
+  text-shadow: 0 0 0.5rem #ff0000, 0 0 0.625rem #000000;
+  font-family: "Alagard", serif;
+  font-size: 4rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+  cursor: pointer;
+  animation: pushBlink 0.82s steps(1, end) infinite;
+  transition: color 100ms linear;
+}
+
+.push-start:hover { color: #fff7b8; }
+
+@keyframes pushBlink {
+  0%, 49.999% { opacity: 1; }
+  50%, 100% { opacity: 0.5; }
+}
+
+@keyframes scarletFloat {
+  from { top: 0; }
+  to { top: 2.0625rem; }
+}

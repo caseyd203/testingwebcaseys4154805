@@ -1,0 +1,143 @@
+@font-face {
+  font-family: "Alagard";
+  src: url("./alagard.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+}
+
+* { box-sizing: border-box; }
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  font-family: "Alagard", serif;
+}
+
+body { cursor: crosshair; }
+
+.design-stage {
+  position: fixed;
+  z-index: 20;
+  left: 50%;
+  top: 50%;
+  width: 120rem;
+  height: 67.5rem;
+  transform: translate(-50%, -50%);
+  overflow: visible;
+  pointer-events: none;
+}
+
+canvas {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  display: block;
+  width: 100vw !important;
+  height: 100vh !important;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.intro-phase {
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+  transition: opacity .55s ease;
+}
+
+.intro-phase.is-leaving { opacity: 0; }
+
+.intro-text {
+  position: absolute;
+  top: 32.4375rem;   /* 519 */
+  left: 24.125rem;   /* 386 */
+  width: 71.75rem;   /* 1148 */
+  color: #f00;
+  text-align: center;
+  font-family: "Alagard", serif;
+  font-size: 2.25rem; /* 36 */
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.18;
+  white-space: pre-line;
+}
+
+.intro-continue,
+.tear-continue {
+  position: absolute;
+  top: 59.5625rem;  /* 953 */
+  left: 47.25rem;   /* 756 */
+  color: rgba(255, 0, 0, .50);
+  text-align: center;
+  font-family: "Alagard", serif;
+  font-size: 2.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+  animation: promptBlink 1s steps(1, end) infinite;
+}
+
+.tear-continue {
+  color: rgba(255, 255, 255, .50);
+  z-index: 1000;
+  visibility: hidden;
+}
+
+.tear-continue.is-visible {
+  display: block !important;
+  visibility: visible !important;
+  animation: promptBlink 1s steps(1, end) infinite;
+}
+
+.tear-continue.is-leaving {
+  animation: none !important;
+  opacity: 0 !important;
+  transition: opacity .65s ease;
+}
+
+@keyframes promptBlink {
+  0%, 49.999% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.hidden { display: none !important; }
+
+.tear-popup {
+  position: absolute;
+  z-index: 40;
+  top: 32.1875rem; /* 515 */
+  left: 36.9375rem; /* 591 */
+  color: #fffce8;
+  -webkit-text-stroke-width: .125rem; /* 2px */
+  -webkit-text-stroke-color: #f00;
+  paint-order: stroke fill;
+  font-family: "Alagard", serif;
+  font-size: 3rem; /* 48 */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+  text-align: center;
+  width: max-content;
+  opacity: 0;
+  transform: scale(.72);
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+.tear-popup.is-visible {
+  animation: popupImpact 1.45s steps(2, end) both;
+}
+
+@keyframes popupImpact {
+  0% { opacity: 0; transform: scale(.64) translate(.6rem, -.25rem); }
+  12% { opacity: 1; transform: scale(1.08); }
+  70% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(.98); }
+}

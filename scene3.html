@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scarlet Wishes — Scene 3</title>
+  <link rel="stylesheet" href="./scene3.css" />
+  <link rel="stylesheet" href="./interface.css" />
+  <script>try{if(sessionStorage.getItem('entanglement:wipe-open')==='1')document.documentElement.classList.add('scene-wipe-pending')}catch(e){}</script>
+  <link rel="stylesheet" href="./transition.css" />
+</head>
+<body>
+  <main id="app" class="scene-stage phase-gather">
+    <div id="bgScene3" class="bg-scene3" aria-hidden="true"></div>
+
+    <!-- Three.js heart / threads canvas is inserted here by scene3.js -->
+
+    <!-- Hidden compatibility nodes used by the original gather engine. -->
+    <button id="holdHitZone" class="hold-hit-zone" type="button" aria-label="Hold to gather"></button>
+    <span id="holdLabel" class="compat-hidden">HOLD</span>
+    <span id="hint" class="compat-hidden"></span>
+    <svg class="compat-hidden" width="1" height="1" aria-hidden="true"><circle id="ringProgress" cx="0" cy="0" r="53"></circle></svg>
+    <button id="resetButton" class="compat-hidden" type="button">RESET</button>
+    <div id="loading" class="loading">LOADING HEART...</div>
+
+    <!-- ==================== PHASE 1: GATHER ==================== -->
+    <section id="gatherUI" class="gather-ui">
+      <div id="holdFrames" class="hold-frames" aria-hidden="true">
+        <div class="hold-frame hold1"></div>
+        <div class="hold-frame hold2"></div>
+        <div class="hold-frame hold3"></div>
+        <div class="hold-frame hold4"></div>
+        <div class="hold-frame hold5 is-visible"></div>
+        <div class="hold-frame held1"></div>
+        <div class="hold-frame held2"></div>
+        <div class="hold-frame held3"></div>
+        <div class="hold-frame held4"></div>
+        <div class="hold-frame held5"></div>
+        <div class="hold-frame held6"></div>
+        <div class="hold-frame held7"></div>
+        <div class="hold-frame held8"></div>
+      </div>
+      <div id="holdText" class="hold-text">HOLD</div>
+      <div id="gatherIdleText" class="gather-bottom gather-idle blink-full">HOLD TO GATHER THE THREADS</div>
+      <div id="gatherHoldingText" class="gather-bottom gather-holding">KEEP HOLDING</div>
+      <div id="gatherCompleteText" class="gather-bottom gather-complete blink-full">THE THREADS HAVE GATHERED | PRESS “C” TO CONTINUE</div>
+    </section>
+
+    <!-- ==================== PHASE 2: CUSTOM COCOON ==================== -->
+    <section id="customUI" class="custom-ui" aria-hidden="true">
+      <div class="scene-img boxlover"></div>
+      <div class="scene-img boxlove"></div>
+      <div class="scene-img boxadjust"></div>
+      <div class="scene-img boxheartbeat"></div>
+      <div class="scene-img boxtyping"></div>
+      <div class="scene-img boxcharacter"></div>
+      <div class="scene-img sliderlover"></div>
+
+      <div class="custom-title lover-title">SHAPE YOUR LOVER</div>
+      <div class="custom-sub lover-sub">&lt; Tell us who they will be &gt;</div>
+
+      <div class="typing-shell">
+        <input id="expectationInput" class="expectation-input" maxlength="64" autocomplete="off" />
+        <div id="typingPlaceholder" class="typing-placeholder">Typing your expectation<span class="typing-caret">|</span></div>
+      </div>
+
+      <button id="weaveAction" class="bracket-action weave-action" type="button">
+        <span class="bracket-img bracket-left yellow"></span>
+        <span class="bracket-img bracket-left red"></span>
+        <span class="action-label">WEAVE</span>
+        <span class="bracket-img bracket-right yellow"></span>
+        <span class="bracket-img bracket-right red"></span>
+      </button>
+
+      <div id="characterViewport" class="character-viewport">
+        <div id="characterList" class="character-list"></div>
+      </div>
+      <div id="characterScrollTrack" class="character-scroll-track">
+        <div id="characterScrollThumb" class="scene-img character-scroll-thumb"></div>
+      </div>
+
+      <div class="custom-title love-title">SHAPE YOUR LOVE</div>
+      <div class="custom-sub love-sub">&lt; Tell us how they will love &gt;</div>
+
+      <div class="love-label love-label-1">Words of affirmation</div>
+      <div class="love-label love-label-2">Quality Time</div>
+      <div class="love-label love-label-3">Acts of Service</div>
+      <div class="love-label love-label-4">Physical Touch</div>
+      <div class="love-label love-label-5">Receiving Gifts</div>
+
+      <div class="love-slider-row love-row-1" data-key="words">
+        <div class="love-fill"></div><div class="scene-img love-frame"></div><input type="range" min="0" max="99" value="0" />
+      </div>
+      <div class="love-slider-row love-row-2" data-key="time">
+        <div class="love-fill"></div><div class="scene-img love-frame"></div><input type="range" min="0" max="99" value="0" />
+      </div>
+      <div class="love-slider-row love-row-3" data-key="service">
+        <div class="love-fill"></div><div class="scene-img love-frame"></div><input type="range" min="0" max="99" value="0" />
+      </div>
+      <div class="love-slider-row love-row-4" data-key="touch">
+        <div class="love-fill"></div><div class="scene-img love-frame"></div><input type="range" min="0" max="99" value="0" />
+      </div>
+      <div class="love-slider-row love-row-5" data-key="gifts">
+        <div class="love-fill"></div><div class="scene-img love-frame"></div><input type="range" min="0" max="99" value="0" />
+      </div>
+
+      <div id="lovePctWords" class="love-percent pct-1">0%</div>
+      <div id="lovePctTime" class="love-percent pct-2">0%</div>
+      <div id="lovePctService" class="love-percent pct-3">0%</div>
+      <div id="lovePctTouch" class="love-percent pct-4">0%</div>
+      <div id="lovePctGifts" class="love-percent pct-5">0%</div>
+
+      <div class="adjust-label scale-label">Scale</div>
+      <div class="adjust-label speed-label">Speed</div>
+      <div class="adjust-label bg-label">Background</div>
+      <div id="scaleBars" class="bar-control scale-bars"></div>
+      <div id="speedBars" class="bar-control speed-bars"></div>
+      <div id="backgroundBars" class="bar-control bg-bars"></div>
+
+      <div id="heartbeatField" class="heartbeat-field"><canvas id="heartbeatCanvas" width="316" height="108"></canvas></div>
+
+      <button id="resetAction" class="bracket-action reset-action" type="button">
+        <span class="bracket-img bracket-left yellow"></span><span class="bracket-img bracket-left red"></span><span class="action-label">RESET</span><span class="bracket-img bracket-right yellow"></span><span class="bracket-img bracket-right red"></span>
+      </button>
+      <button id="varyAction" class="bracket-action vary-action" type="button">
+        <span class="bracket-img bracket-left yellow"></span><span class="bracket-img bracket-left red"></span><span class="action-label">VARY</span><span class="bracket-img bracket-right yellow"></span><span class="bracket-img bracket-right red"></span>
+      </button>
+      <button id="reweaveAction" class="bracket-action reweave-action" type="button">
+        <span class="bracket-img bracket-left yellow"></span><span class="bracket-img bracket-left red"></span><span class="action-label">REWEAVE</span><span class="bracket-img bracket-right yellow"></span><span class="bracket-img bracket-right red"></span>
+      </button>
+      <button id="inspectAction" class="bracket-action inspect-action" type="button">
+        <span class="bracket-img bracket-left yellow"></span><span class="bracket-img bracket-left red"></span><span class="action-label">INSPECT</span><span class="bracket-img bracket-right yellow"></span><span class="bracket-img bracket-right red"></span>
+      </button>
+    </section>
+
+    <div id="inspectLayer" class="inspect-layer" aria-hidden="true"><svg id="inspectLinks" class="inspect-links" viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+
+    <div id="customBottomPrompt" class="custom-bottom-prompt blink-full">PRESS “H” TO HIDE &amp; SHOW BAR | PRESS “S” WHEN YOU SATISFY</div>
+
+    <!-- ==================== CONFIRMATION ==================== -->
+    <section id="confirmPhase" class="confirm-phase" aria-hidden="true">
+      <div class="scene-img paneltext2"></div>
+      <div class="scene-img panelname2"></div>
+      <div class="diamond-wrap">
+        <div class="scene-img diamond2"></div>
+        <div class="scene-img diamond2-2"></div>
+      </div>
+      <div class="deities-label">The Deities</div>
+      <div id="confirmDialogue" class="confirm-dialogue"></div>
+      <div id="confirmChoices" class="confirm-choices">
+        <button id="confirmYes" class="confirm-choice yes" type="button">&gt; YES</button>
+        <button id="confirmNo" class="confirm-choice no" type="button">&gt; NO</button>
+      </div>
+      <div id="confirmContinue" class="confirm-continue blink-half">PRESS “C” TO CONTINUE</div>
+    </section>
+  </main>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+    }
+  }
+  </script>
+    <script src="./scarlet-audio.js"></script>
+  <script src="./interface.js"></script>
+<script type="module" src="./scene3.js"></script>
+  <script src="./transition.js"></script>
+</body>
+</html>

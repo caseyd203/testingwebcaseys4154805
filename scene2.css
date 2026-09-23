@@ -1,0 +1,433 @@
+@font-face {
+  font-family: "Alagard";
+  src: url("./alagard.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+:root {
+  font-size: 16px;
+  --stage-width: 120rem;
+  --stage-height: 67.5rem;
+  --brown: #451f18;
+  --brown-dark: #3d1b14;
+  --cream: #fffce8;
+  --red: #ff0000;
+  --sig-red: #e61616;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+body {
+  position: relative;
+  font-family: "Alagard", serif;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.scene-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--stage-width);
+  height: var(--stage-height);
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  background: #000;
+}
+
+.scene-layer, .base3, .cloud {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  pointer-events: none;
+}
+
+.base {
+  inset: 0;
+  width: 120rem;
+  height: 67.5rem;
+}
+.base-1 { z-index: 1; background-image: url("./SCENE2/base1.png"); }
+.base-2 { z-index: 2; background-image: url("./SCENE2/base2.png"); }
+
+/*
+  Exact scene stack:
+  base1 → base2 → cloud1 → cloud2 → cloud3 → base3 frames → base4.
+  The same stack remains active before and after the LETTER phase.
+*/
+.cloud1-a,
+.cloud1-b {
+  z-index: 3;
+}
+
+.cloud2-a,
+.cloud2-b {
+  z-index: 4;
+}
+
+.cloud3-a,
+.cloud3-b {
+  z-index: 5;
+}
+
+.base-4 {
+  z-index: 7;
+  background-image: url("./SCENE2/base4.png");
+}
+
+
+.base3-group {
+  inset: 0;
+  width: 120rem;
+  height: 67.5rem;
+  z-index: 6;
+}
+.base3 {
+  inset: 0;
+  width: 120rem;
+  height: 67.5rem;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.base3.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.base3-1 { background-image: url("./SCENE2/base3-1.png"); }
+.base3-2 { background-image: url("./SCENE2/base3-2.png"); }
+.base3-3 { background-image: url("./SCENE2/base3-3.png"); }
+
+.cloud {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-origin: center center;
+}
+
+.cloud1-a, .cloud1-b {
+  width: 44.0625rem;
+  height: 12.625rem;
+  background-image: url("./SCENE2/cloud1.png");
+}
+.cloud1-a { top: 15.75rem; left: 80rem; }
+.cloud1-b { top: 26rem; left: -14.75rem; }
+
+.cloud2-a, .cloud2-b {
+  width: 19.875rem;
+  height: 7.375rem;
+  background-image: url("./SCENE2/cloud2.png");
+}
+.cloud2-a { top: 4.375rem; left: 67.3125rem; }
+.cloud2-b { top: 19.5625rem; left: 17.625rem; }
+
+.cloud3-a, .cloud3-b {
+  width: 21.3125rem;
+  height: 5.125rem;
+  background-image: url("./SCENE2/cloud3.png");
+}
+.cloud3-a { top: 13.1875rem; left: 27.5625rem; }
+.cloud3-b { top: 29.75rem; left: 77.25rem; }
+
+
+
+.panel-phase {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+.panel-phase.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.panel-text2, .panel-name2 {
+  inset: 0;
+  width: 120rem;
+  height: 67.5rem;
+}
+.panel-text2 { z-index: 11; background-image: url("./SCENE2/paneltext2.png"); }
+.panel-name2 { z-index: 12; background-image: url("./SCENE2/panelname2.png"); }
+
+.diamond-group {
+  position: absolute;
+  inset: 0;
+  z-index: 13;
+  pointer-events: none;
+}
+.diamond-main2, .diamond-slice2 {
+  position: absolute;
+  top: 57.125rem;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+}
+.diamond-main2 {
+  left: 92.6875rem;
+  width: 3.375rem;
+  height: 3.5625rem;
+  background-image: url("./SCENE2/diamond2.png");
+  animation: diamondStateOne 0.8s steps(1, end) infinite;
+}
+.diamond-slice2 {
+  left: 94.25rem;
+  width: 0.3125rem;
+  height: 3.5625rem;
+  background-image: url("./SCENE2/diamond2-2.png");
+  animation: diamondStateTwo 0.8s steps(1, end) infinite;
+}
+
+@keyframes diamondStateOne {
+  0%, 49.999% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes diamondStateTwo {
+  0%, 49.999% { opacity: 0; }
+  50%, 100% { opacity: 1; }
+}
+
+.deities-label {
+  position: absolute;
+  z-index: 14;
+  top: 45.75rem;
+  left: 27.5625rem;
+  width: 13.1875rem;
+  color: var(--brown-dark);
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.scene2-dialogue {
+  position: absolute;
+  z-index: 14;
+  top: 50.875rem;
+  left: 24.3125rem;
+  width: 70.375rem;
+  color: var(--brown);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1.1;
+  white-space: normal;
+}
+
+.scene2-continue-prompt {
+  position: absolute;
+  z-index: 14;
+  top: 58.0625rem;       /* 929 / 16 */
+  left: 69.5rem;         /* 1112 / 16 */
+  width: 22.5625rem;     /* 361 / 16 */
+  color: var(--brown);
+  font-size: 2rem;        /* 32 */
+  font-weight: 500;
+  line-height: normal;
+  opacity: 0.5;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+@keyframes continueBlink {
+  0%, 49.999% { opacity: 0.5; }
+  50%, 100% { opacity: 0; }
+}
+
+.agreement-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+.agreement-overlay.is-visible { opacity: 1; }
+
+.agreement-phase {
+  position: absolute;
+  inset: 0;
+  z-index: 21;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+.agreement-phase.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.letter-frame {
+  position: absolute;
+  inset: 0;
+  width: 120rem;
+  height: 67.5rem;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: 0;
+  transition: none;
+}
+.letter-frame.is-visible { opacity: 1; }
+
+.agreement-content {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+.agreement-content.is-visible { opacity: 1; }
+
+.agreement-title-small {
+  position: absolute;
+  top: 16.625rem;
+  left: 50.75rem;
+  width: 20.5rem;
+  height: 3.1875rem;
+  color: var(--red);
+  font-size: 4rem;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+}
+.agreement-title-large {
+  position: absolute;
+  top: 20.6875rem;
+  left: 44.8125rem;
+  width: 32.375rem;
+  height: 4.4375rem;
+  color: var(--red);
+  font-size: 5.625rem;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+}
+.agreement-lead {
+  position: absolute;
+  top: 27.4375rem;
+  left: 25.0625rem;
+  width: 71.8125rem;
+  height: 1.9375rem;
+  color: var(--brown);
+  text-align: center;
+  font-size: 1.875rem;
+  font-weight: 500;
+  line-height: normal;
+}
+.agreement-return {
+  position: absolute;
+  top: 31.5625rem;
+  left: 25.0625rem;
+  width: 71.8125rem;
+  height: 8.1875rem;
+  text-align: center;
+}
+.return-heading {
+  color: var(--red);
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 0.6875rem;
+}
+.return-body {
+  color: var(--brown);
+  font-size: 1.875rem;
+  font-weight: 500;
+  line-height: 1.18;
+}
+
+
+.sign-label {
+  position: absolute;
+  color: var(--sig-red);
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: normal;
+  height: 1.6875rem;
+  white-space: nowrap;
+}
+.deities-sign {
+  top: 41.9375rem;
+  left: 28.0625rem;
+  width: 17.875rem;
+}
+.player-sign {
+  top: 41.9375rem;
+  left: 76.1875rem;
+  width: 17.875rem;
+}
+
+.deities-sign-image {
+  position: absolute;
+  top: 44.3125rem;
+  left: 31.75rem;
+  width: 10.4375rem;
+  height: 9rem;
+  background-image: url("./SCENE2/deitiessnt.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+.signature-canvas {
+  position: absolute;
+  top: 44.0625rem;
+  left: 72.375rem;
+  width: 25.5rem;
+  height: 9.125rem;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  cursor: crosshair;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.agreement-continue-prompt {
+  position: absolute;
+  z-index: 999;
+  top: 62rem;          /* 992 / 16 */
+  left: 48.6875rem;    /* 779 / 16 */
+  width: 22.5625rem;   /* 361 / 16 */
+  color: #FFFCE8;
+  font-family: "Alagard", serif;
+  font-size: 2rem;      /* 32 / 16 */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  opacity: 0;
+  visibility: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.agreement-continue-prompt.is-visible {
+  visibility: visible;
+  animation: agreementPromptBlink 1s steps(1, end) infinite;
+}
+
+@keyframes agreementPromptBlink {
+  0%,
+  49.999% {
+    opacity: 0.5;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,255 @@
+@font-face {
+  font-family: "Alagard";
+  src: url("./alagard.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+/* Shared Scarlet Wishes interface — always below scene transition, above scene. */
+:root {
+  --scarlet-interface-z: 2147482000;
+  --scarlet-overlay-z: 1;
+  --scarlet-panel-z: 3;
+  --scarlet-button-z: 20;
+}
+
+.scarlet-interface {
+  position: fixed;
+  width: 120rem;
+  height: 67.5rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--scarlet-interface-z);
+  pointer-events: none;
+  font-family: "Alagard", serif;
+  font-weight: 500;
+  line-height: normal;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.scarlet-interface * { box-sizing: border-box; }
+
+.scarlet-interface-btn {
+  position: absolute;
+  display: block;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: var(--scarlet-button-z);
+  filter: drop-shadow(0 0 1.25rem #000000);
+}
+
+.scarlet-capture-btn {
+  width: 5.0625rem; height: 4.875rem;
+  top: 3.1875rem; left: 93.8125rem;
+  background-image: url("./INTERFACE/capturebtn.png");
+}
+.scarlet-music-btn {
+  width: 5rem; height: 4.6875rem;
+  top: 3.1875rem; left: 102.0625rem;
+  background-image: url("./INTERFACE/musicbtn.png");
+}
+.scarlet-info-btn {
+  width: 4.75rem; height: 4.5625rem;
+  top: 3.1875rem; left: 110.1875rem;
+  background-image: url("./INTERFACE/infobtn.png");
+}
+
+.scarlet-interface-overlay {
+  position: absolute;
+  inset: 0;
+  width: 120rem;
+  height: 67.5rem;
+  background: #000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: var(--scarlet-overlay-z);
+  transition: opacity 420ms ease, visibility 0s linear 420ms;
+}
+.scarlet-interface-overlay.is-visible {
+  opacity: 0.8;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 420ms ease;
+}
+
+/* ---------- Capture ---------- */
+.scarlet-capture-modal {
+  position: absolute;
+  inset: 0;
+  z-index: var(--scarlet-panel-z);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 420ms ease, visibility 0s linear 420ms;
+}
+.scarlet-capture-modal.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 420ms ease;
+}
+.scarlet-capture-box {
+  position: absolute;
+  width: 44.1875rem;  /* 707px */
+  height: 25.3125rem; /* 405px */
+  top: 21.125rem;     /* 338px */
+  left: 37.9375rem;   /* 607px */
+  background: url("./INTERFACE/boximage.png") center/100% 100% no-repeat;
+}
+.scarlet-capture-preview {
+  position: absolute;
+  width: 43rem;        /* 688px */
+  height: 24.1875rem;  /* 387px */
+  top: 21.6875rem;     /* 347px */
+  left: 38.5rem;       /* 616px */
+  display: block;
+  object-fit: fill;
+  object-position: center center;
+  background: #000;
+  image-rendering: auto;
+  z-index: 2;
+}
+.scarlet-capture-title {
+  position: absolute;
+  top: 16.875rem;  /* 270px */
+  left: 48.5rem;   /* 776px */
+  color: #FFF7B8;
+  font-size: 2.25rem;
+  white-space: nowrap;
+}
+.scarlet-capture-choice {
+  position: absolute;
+  border: 0;
+  background: transparent;
+  color: #FFF7B8;
+  font: inherit;
+  font-size: 2.25rem;
+  padding: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 2;
+}
+.scarlet-capture-choice::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background: #FFF7B8;
+  opacity: 0;
+}
+.scarlet-capture-choice:hover { color: #FF0000; }
+.scarlet-capture-choice:hover::before { opacity: 1; }
+.scarlet-capture-yes { top: 48.625rem; left: 47.9375rem; }
+.scarlet-capture-yes::before {
+  width: 6.8125rem; height: 2.625rem; /* 109x42 */
+  top: -0.1875rem; left: -0.4375rem; /* rect absolute -> 775,760 */
+}
+.scarlet-capture-no { top: 48.625rem; left: 66.5rem; }
+.scarlet-capture-no::before {
+  width: 6.8125rem; height: 2.625rem; /* 109x42 */
+  top: -0.1875rem; left: -0.375rem; /* rect absolute -> 775,1058 */
+}
+
+/* ---------- Music ---------- */
+.scarlet-music-panel {
+  position: absolute;
+  width: 21rem; height: 10.25rem;
+  top: 9.375rem; left: 94rem;
+  z-index: calc(var(--scarlet-button-z) - 1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.25rem);
+  pointer-events: none;
+  background: url("./INTERFACE/boxmusic.png") center/100% 100% no-repeat;
+  transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms;
+}
+.scarlet-music-panel.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+.scarlet-music-label {
+  position: absolute;
+  color: #FFC258;
+  font-size: 1.5rem;
+  white-space: nowrap;
+}
+.scarlet-music-label.music { top: 2.4375rem; left: 1.9375rem; }
+.scarlet-music-label.sfx { top: 6.4375rem; left: 2.75rem; }
+.scarlet-volume-shell {
+  position: absolute;
+  width: 11.3125rem; height: 1.8125rem;
+  left: 7.75rem;
+  cursor: ew-resize;
+  pointer-events: auto;
+}
+.scarlet-volume-shell.music { top: 2.1875rem; }
+.scarlet-volume-shell.sfx { top: 6.3125rem; }
+.scarlet-volume-fill {
+  position: absolute;
+  left: 0.3125rem;
+  top: 0.3125rem;
+  height: 1.1875rem;
+  width: 8.8125rem;
+  background: #FFC258;
+  pointer-events: none;
+}
+.scarlet-volume-frame {
+  position: absolute;
+  inset: 0;
+  width: 11.3125rem;
+  height: 1.8125rem;
+  background: url("./INTERFACE/slidermusic.png") center/100% 100% no-repeat;
+  pointer-events: none;
+}
+
+/* ---------- Information ---------- */
+.scarlet-info-modal {
+  position: absolute;
+  inset: 0;
+  z-index: var(--scarlet-panel-z);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 420ms ease, visibility 0s linear 420ms;
+}
+.scarlet-info-modal.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 420ms ease;
+}
+.scarlet-info-box {
+  position: absolute;
+  width: 56.3125rem; height: 45.1875rem;
+  top: 11.125rem; left: 31.875rem;
+  background: url("./INTERFACE/boxinformation.png") center/100% 100% no-repeat;
+}
+.scarlet-info-copy {
+  position: absolute;
+  width: 45.4375rem;
+  top: 18.5625rem; left: 37.3125rem;
+  color: #451F18;
+  font-size: 1.625rem;
+  line-height: normal;
+  white-space: normal;
+}
+.scarlet-info-copy p { margin: 0 0 1.4rem 0; }
+.scarlet-info-copy p:last-child { margin-bottom: 0; }
+
+/* html2canvas ignores most pointer state, but this prevents interface modals from
+   consuming input while a scene transition is covering the page. */
+html.scene-wipe-pending .scarlet-interface { pointer-events: none; }
